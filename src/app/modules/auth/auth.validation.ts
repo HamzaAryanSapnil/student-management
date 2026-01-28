@@ -1,6 +1,6 @@
 import z from "zod";
 
-const userSignupSchema = z.object({
+const studentSignupSchema = z.object({
   body: z.object({
     email: z.email({ message: "Invalid email format." }),
 
@@ -33,6 +33,6 @@ const loginValidationSchema = z.object({
 });
 
 export const AuthValidation = {
-  userSignupSchema,
+  studentSignupSchema,
   loginValidationSchema,
 };
