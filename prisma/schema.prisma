@@ -1,35 +1,29 @@
-
-
 generator client {
   provider = "prisma-client-js"
-
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-
 }
 
-
 model User {
-  id            String    @id @default(uuid())
-  email         String    @unique
-  passwordHash  String    @map("password_hash")
-  role          UserRole  @default(student)
-  fullName      String?   @map("full_name")
-  profileImage  String?   @map("profile_image")
-  bio           String?
-  location      String?
-  isVerified    Boolean   @default(false) @map("is_verified")
-  status        UserStatus @default(ACTIVE)
-  createdAt     DateTime  @default(now()) @map("created_at")
-  updatedAt     DateTime  @updatedAt @map("updated_at")
-
-  // Relations
-  students      Student[]
-  classes       Class[]   @relation("ClassTeacher")
+  id           String     @id @default(uuid())
+  email        String     @unique
+  passwordHash String     @map("password_hash")
+  role         UserRole   @default(student)
+  name         String    @map("full_name")
+  profileImage String?    @map("profile_image")
+  bio          String?
+  location     String?
+  isVerified   Boolean    @default(false) @map("is_verified")
+  status       UserStatus @default(ACTIVE)
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
   
+  students Student[]
+  classes  Class[]   @relation("ClassTeacher")
+
   @@map("users")
 }
 
@@ -45,19 +39,17 @@ enum UserStatus {
   DELETED
 }
 
-
 model Student {
-  id        Int     @id @default(autoincrement())
-  name      String
-  age       Int
-  classId   Int?
-  class     Class?  @relation(fields: [classId], references: [id])
-  userId    String
-  user      User    @relation(fields: [userId], references: [id])
+  id      Int    @id @default(autoincrement())
+  name    String
+  age     Int
+  classId Int?
+  class   Class? @relation(fields: [classId], references: [id])
+  userId  String
+  user    User   @relation(fields: [userId], references: [id])
 
   @@map("students")
 }
-
 
 model Class {
   id        Int       @id @default(autoincrement())
