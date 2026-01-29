@@ -9,6 +9,7 @@
     "prisma:generate": "bunx prisma generate",
     "prisma:migrate": "bunx prisma migrate dev",
     "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
+    "build": "tsc",
     "start": "bun run src/server.ts",
     "eslint": "bunx eslint . ./src",
     "prisma:format": "bunx prisma format"
