@@ -1,6 +1,6 @@
 import z from "zod";
 
-const signupSchema = z.object({
+const createStudentSchema = z.object({
   body: z.object({
     email: z.email({ message: "Invalid email format." }),
 
@@ -22,17 +22,16 @@ const signupSchema = z.object({
       .string()
       .min(2, { message: "Name must be at least 2 characters." })
       .max(100, { message: "Name cannot exceed 100 characters." }),
+
+    age: z
+      .number()
+      .int({ message: "Age must be an integer." })
+      .min(5, { message: "Age must be at least 5." })
+      .max(100, { message: "Age cannot exceed 100." })
+      .optional(),
   }),
 });
 
-const loginValidationSchema = z.object({
-  body: z.object({
-    email: z.email({ message: "Invalid email address format." }),
-    password: z.string({ message: "Password is required!" }),
-  }),
-});
-
-export const AuthValidation = {
-  signupSchema,
-  loginValidationSchema,
+export const StudentValidation = {
+  createStudentSchema,
 };

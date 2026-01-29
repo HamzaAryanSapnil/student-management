@@ -7,6 +7,7 @@ import httpStatus from "http-status";
 import { Secret } from "jsonwebtoken";
 import ApiError from "../errorHelpers/ApiError";
 import { config } from "../config/env";
+import { TAuthUser } from "../modules/student/student.interface";
 
 const auth = (...roles: string[]) => {
   return async (
@@ -26,7 +27,7 @@ const auth = (...roles: string[]) => {
         config.jwt.jwt_secret as Secret,
       ) as { email: string; role: string; userId: string };
 
-      req.user = verifyUser;
+      req.user = verifyUser as TAuthUser;
 
       if (roles.length && !roles.includes(verifyUser.role)) {
         throw new ApiError(httpStatus.UNAUTHORIZED, "You are not authorized!");

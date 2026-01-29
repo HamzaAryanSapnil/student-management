@@ -2,19 +2,15 @@
 import { Server } from "http";
 import app from "./app";
 import { config } from "./app/config/env";
-// import config from "./config";
-// import { seedAdmin } from "./seeds/seedAdmin";
-
-
-
-
-
+import { seedDefaultUsers } from "./utils/seedUsers";
 
 let server: Server;
 
-
 const startServer = async () => {
     try {
+        
+        await seedDefaultUsers();
+        
         server = app.listen(config.PORT, () => {
           console.log(
             `🚀 Student management - Server is running on http://localhost:${config.PORT}`,

@@ -2,18 +2,24 @@ import { Router } from "express";
 import { StudentController } from "./student.controller";
 import auth from "../../middlewares/auth";
 import validateRequest from "../../middlewares/validateRequest";
-import { AuthValidation } from "../auth/auth.validation";
-
-
-
-
+import { StudentValidation } from "./student.validation";
 
 const router = Router();
 
+
+
+
+router.get("/", auth("ADMIN", "TEACHER"), StudentController.getAllStudents);
+
+
+router.get("/:id", auth("ADMIN", "TEACHER", "STUDENT"), StudentController.getStudentById);
+
+
 router.post(
-  "/create-student",
-  auth("ADMIN", "TEACHER"),
-  validateRequest(AuthValidation.studentSignupSchema),
+  "/",
+  auth("ADMIN"),
+  validateRequest(StudentValidation.createStudentSchema),
+  StudentController.createStudent,
 );
 
 export const StudentRoutes = router;
